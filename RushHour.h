@@ -20,6 +20,12 @@ struct WinningRow{
     static const bool recursive = (WinningRow<row,index+1,rowSize>::result && (GetAtIndex<index,row>::value::type == EMPTY || GetAtIndex<index,row>::value::type == X));
   	static const bool result = ConditionalInteger<recursive,1,0>::value;
 };
+
+template<typename row,int rowSize>
+struct WinningRow<row,-1,rowSize>{
+    static const bool recursive = false;
+  	static const bool result = false;
+};
 template<typename row,int rowSize>
 struct WinningRow<row, rowSize,rowSize>{
   static const bool result = 1;
@@ -36,7 +42,8 @@ template<typename b, int rowIndex, int length>
 struct CheckWinAux{
   typedef typename GetAtIndex<rowIndex,typename b::board>::value row;
   static const int indexIfFound = IndexOfX<row,0, row::size>::result;
-  static const bool found = ConditionalInteger<(indexIfFound != -1) && (WinningRow<row , indexIfFound, row::size>::result),1,CheckWinAux<b,rowIndex+1,length>::found>::value;
+  static const bool found = ConditionalInteger<(WinningRow<row , indexIfFound, row::size>::result),1,CheckWinAux<b,rowIndex+1,length>::found>::value;
+//  static const bool found = false;
 };
 template<typename b, int length>
 struct CheckWinAux<b, length, length>{

@@ -12,15 +12,6 @@
 #include "GameBoard.h"
 #include "BoardCell.h"
 #include "List.h"
-#include "TransposeList.h"
-#include "Utilities.h"
-#include "Direction.h"
-
-
-template<typename row,typename cell,int A>
-struct DoTheMove{
-	typedef typename PrependList<typename row::head,typename DoTheMove<typename row::next,cell,A>::moved>::list moved;
-};
 
 template<CellType t,Direction d,int m>
 struct Move {
@@ -35,26 +26,16 @@ struct MoveVehicle{
 	static_assert(R < b::width,"invalid R");
 	static_assert(R > 0,"invalid R");
 	static_assert(C < b::lenght,"invalid C");
-	static_assert(C > 0,"invalid C");
+	static_assert(C < 0,"invalid C");
 	typedef typename GetAtIndex<R,typename b::board>::value row;
-  typedef typename Conditional<D == Direction::RIGHT, row, typename reverseList<row>::list>::value actualRowPre;
-	typedef typename GetAtIndex<C,actualRowPre>::value car;
+	typedef typename GetAtIndex<C,row>::value car;
 	static_assert(car::type != EMPTY,"the car posiition is emPtY");
-	typedef typename DoTheMove<actualRowPre,car,A>::moved newRow;
-  typedef typename Conditional<D == Direction::RIGHT, newRow, typename reverseList<newRow>::list>::value actualRowPost;
-  typedef GameBoard<typename SetAtIndex<R,actualRowPost,typename b::board>::list> board;
+//	typedef  DoTheMove<row,car,A>::moved newRow;
+
+//	typename setAtIndex<R,newRow,b> board;
 
 };
-template<typename b, int R,int C,int A>
-struct MoveVehicle<b,R,C,UP,A>{
- typedef typename Transpose<typename b::board>::matrix transposed;
- typedef typename MoveVehicle<GameBoard<transposed>,C,R,RIGHT,A>::board done;
- typedef typename Transpose<done>::matrix transposedPost;
- typedef GameBoard<transposedPost> board;
- 
- 
 
-};
 template<typename row,typename cell>
 struct moveOnce{
  };
@@ -62,7 +43,7 @@ struct moveOnce{
 template<typename row,CellType t,Direction dir,int len>
 struct moveOnce<row,BoardCell<t,dir,len>>{
 	static_assert(row::head::type == EMPTY,"cant move car1");
-	typedef typename SetAtIndex<0,BoardCell<t,dir,len>,row>::list list;
+	typedef SetAtIndex<0,BoardCell<t,dir,len>,row> list;
  };
 
 template<CellType t,Direction dir,Direction dir2,int len,typename...TT>
@@ -84,9 +65,13 @@ struct moveSeveral<row,cell,0>{
 	typedef row result;
 };
 
-template<CellType t,Direction dir,Direction dir2,int len,typename...TT,int A>
-struct DoTheMove<List<BoardCell<t,dir,len>,TT...>,BoardCell<t,dir2,len>,A>{
-	typedef typename moveSeveral<List<BoardCell<t,dir2,len>,TT...>,BoardCell<t,dir,len>,A>::result moved;
+template<typename row,typename cell,int A>
+struct DoTheMove{
+	typedef typename PrependList<row::head,DoTheMove<row::next,cell,A>::moved>::list moved;
+};
+template<CellType t,Direction dir,int len,typename...TT,int A>
+struct DoTheMove<List<BoardCell<t,dir,len>,TT...>,BoardCell<t,dir,len>,A>{
+	typedef typename moveSeveral<List<BoardCell<t,dir,len>,TT...>,BoardCell<t,dir,len>,A> moved;
 };
 
 

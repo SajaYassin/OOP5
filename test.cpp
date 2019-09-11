@@ -76,19 +76,26 @@ static_assert(Conditional<(0 == 1), Int<0>, Int<1>>::value :: value== 1, "gg");*
     > > gameBoard1;
     printf("*****************\n");
     Printer<gameBoard1>::print(std::cout);
-    typedef typename reverseList<List < BoardCell< X , RIGHT , 2>, BoardCell< X , RIGHT , 2>,BoardCell< EMPTY , RIGHT , 1>>>::list reversed1;
     printf("*****************\n");
-//    typedef typename Transpose<reversed1>::matrix reversed3;
-//    Printer<reversed3>::print(std::cout);
-    printf("*****************\n");
-    Printer<reversed1>::print(std::cout);
-    printf("*****************\n");
-    typedef List < BoardCell< X , RIGHT , 2>, BoardCell< X , RIGHT , 2>,BoardCell< EMPTY , RIGHT , 1>> reversed2;
-    Printer<reversed2>::print(std::cout);
 //    template<typename b, int R,int C,Direction D,int A>
-    typedef typename MoveVehicle<gameBoard1,2,3,RIGHT,1>::board afterBoard;
+    /*typedef typename MoveVehicle<gameBoard1,2,3,RIGHT,1>::board afterBoard;
     Printer<afterBoard>::print(std::cout);
-
+    printf("*****************\n");*/
+    typedef typename MoveVehicle<gameBoard1,2,3,LEFT,1>::board afterBoard2;
+    Printer<afterBoard2>::print(std::cout);
+    printf("*****************\n");
+    typedef typename MoveVehicle<afterBoard2,2,3,LEFT,1>::board afterBoard3;
+    Printer<afterBoard3>::print(std::cout);
+    printf("*****************\n");
+    typedef typename MoveVehicle<afterBoard3,2,1,RIGHT,4>::board afterBoard4;
+    Printer<afterBoard4>::print(std::cout);
+    printf("*****************\n");
+    typedef typename MoveVehicle<afterBoard4,1,2,RIGHT,2>::board afterBoard5;
+    Printer<afterBoard5>::print(std::cout);
+    printf("*****************\n");
+    typedef typename MoveVehicle<afterBoard5,4,2,UP,2>::board afterBoard6;
+    Printer<afterBoard6>::print(std::cout);
+    printf("*****************\n");
 }
 
 

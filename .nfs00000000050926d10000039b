@@ -1,0 +1,3 @@
+int main(){
+  (typename int) x = 3;
+}

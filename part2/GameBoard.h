@@ -14,7 +14,7 @@ template<typename list>
 struct GameBoard{
 	typedef list board;
 	static const int width = list::head::size;
-	static const int lenght = list::size;
+	static const int length = list::size;
 };
 
 

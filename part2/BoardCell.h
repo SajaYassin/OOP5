@@ -6,7 +6,7 @@ template<CellType t,Direction dir,int len>
 struct BoardCell{
 	static const CellType type = t;
 	static const Direction direction = dir;
-	static const int lenght = len;
+	static const int length = len;
 };
 
 #endif /* BOARDCELL	_H_ */

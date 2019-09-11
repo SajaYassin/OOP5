@@ -11,6 +11,8 @@
 template<typename... TT>
 struct List {
 	static const int size = 0;
+ 	typedef void head;
+	typedef List<> next;
 };
 
 template<typename T,typename... TT>
@@ -24,7 +26,7 @@ template <typename T>
 struct List<T> {
 	typedef T head;
 	static const int size = 1;
-
+	typedef List<> next;
 };
 
 template <typename T,typename List>

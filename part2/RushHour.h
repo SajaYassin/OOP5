@@ -85,7 +85,7 @@ template<typename b, typename M>
 template<typename b, typename M, typename ...MM>
   struct CheckSolutionAux<b,List<M,MM...>>{
     typedef typename MoveVehicle<b,FindCar<b,M::type>::row,FindCar<b,M::type>::col,M::direction, M::amount>::board boardMoved;
-    typedef typename CheckSolutionAux<boardMoved,MM...>::board board;
+    typedef typename CheckSolutionAux<boardMoved,List<MM...>>::board board;
   };
 template<typename b, typename M>
   struct CheckSolutionAux<b,List<M>>{
@@ -99,6 +99,6 @@ template<typename b, typename M>
 template<typename b, typename M, typename ...MM>
 struct CheckSolution<b,List<M,MM...>>{
   typedef typename CheckSolutionAux<b,List<M,MM...>>::board board;
-  const bool result = CheckWin<board>::result;
+  static const bool result = CheckWin<board>::result;
 };
 #endif /* RUSHHOUR_H_ */

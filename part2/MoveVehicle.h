@@ -32,7 +32,7 @@ struct Move {
 
 template<typename b, int R,int C,Direction D,int A>
 struct MoveVehicleHorizontal{
-	static_assert(R < b::lenght,"invalid R");
+	static_assert(R < b::length,"invalid R");
 	static_assert(R >= 0,"invalid R");
 	static_assert(C < b::width,"invalid C");
 	static_assert(C >= 0,"invalid C");
@@ -48,7 +48,7 @@ struct MoveVehicleHorizontal{
 };
 template<typename b, int R,int C,Direction D,int A>
 struct MoveVehicle{
-	static_assert(R < b::lenght,"invalid R");
+	static_assert(R < b::length,"invalid R");
 	static_assert(R >= 0,"invalid R");
 	static_assert(C < b::width,"invalid C");
 	static_assert(C >= 0,"invalid C");
@@ -61,7 +61,7 @@ struct MoveVehicle{
 
 template<typename b, int R,int C,int A>
 struct MoveVehicle<b,R,C,UP,A>{
-	static_assert(R < b::lenght,"invalid R");
+	static_assert(R < b::length,"invalid R");
 	static_assert(R >= 0,"invalid R");
 	static_assert(C < b::width,"invalid C");
 	static_assert(C >= 0,"invalid C");
@@ -78,7 +78,7 @@ struct MoveVehicle<b,R,C,UP,A>{
 
 template<typename b, int R,int C,int A>
 struct MoveVehicle<b,R,C,DOWN,A>{
-	static_assert(R < b::lenght,"invalid R");
+	static_assert(R < b::length,"invalid R");
 	static_assert(R >= 0,"invalid R");
 	static_assert(C < b::width,"invalid C");
 	static_assert(C >= 0,"invalid C");

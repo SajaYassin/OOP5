@@ -79,6 +79,7 @@ static_assert(Conditional<(0 == 1), Int<0>, Int<1>>::value :: value== 1, "gg");*
     Printer<gameBoard1>::print(std::cout);
     printf("*****************\n");
     printf("%d",CheckWin<gameBoard1>::result);
+    printf("(%d,%d)", FindCar<gameBoard1,C>::row,FindCar<gameBoard1,C>::col);
 //    template<typename b, int R,int C,Direction D,int A>
     /*typedef typename MoveVehicle<gameBoard1,2,3,RIGHT,1>::board afterBoard;
     Printer<afterBoard>::print(std::cout);

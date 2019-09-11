@@ -7,6 +7,7 @@
 
 #ifndef MOVEVEHICLE_H_
 #define MOVEVEHICLE_H_
+
 #include "CellType.h"
 #include "Direction.h"
 #include "GameBoard.h"
@@ -15,7 +16,6 @@
 #include "TransposeList.h"
 #include "Utilities.h"
 #include "Direction.h"
-
 
 template<typename row,typename cell,int A>
 struct DoTheMove{
@@ -124,9 +124,6 @@ template<CellType t,Direction dir,Direction dir2,int len,typename...TT,int A>
 struct DoTheMove<List<BoardCell<t,dir,len>,TT...>,BoardCell<t,dir2,len>,A>{
 	typedef typename moveSeveral<List<BoardCell<t,dir2,len>,TT...>,BoardCell<t,dir,len>,A>::result moved;
 };
-
-
-
 
 
 #endif /* MOVEVEHICLE_H_ */

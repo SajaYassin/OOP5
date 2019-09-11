@@ -8,14 +8,7 @@
 #ifndef RUSHHOUR_H_
 #define RUSHHOUR_H_
 
-
-#include "CellType.h"
-#include "Direction.h"
-#include "GameBoard.h"
-#include "BoardCell.h"
-#include "List.h"
 #include "MoveVehicle.h"
-
 
 template<typename row,int index, int rowSize>
 struct WinningRow{
@@ -70,8 +63,8 @@ template<typename b, CellType car, int rowIndex, int rowSize>
 struct FindCarAux{
   typedef typename GetAtIndex<rowIndex,typename b::board>::value actualRow;
   static const int foundCol = IndexOfCar<actualRow,car,0,actualRow::size>::result;
-  static const int col = ConditionalInteger<foundCol != -1, foundCol, FindCarAux<b,car,rowIndex+1, rowSize>::col>::result;
-  static const int row = ConditionalInteger<foundCol != -1, rowIndex, FindCarAux<b,car,rowIndex+1, rowSize>::row>::result;
+  static const int col = ConditionalInteger<foundCol != -1, foundCol, FindCarAux<b,car,rowIndex+1, rowSize>::col>::value;
+  static const int row = ConditionalInteger<foundCol != -1, rowIndex, FindCarAux<b,car,rowIndex+1, rowSize>::row>::value;
 };
 
 template<typename b, CellType car, int rowSize>
@@ -86,17 +79,26 @@ struct FindCar{
   static const int col = FindCarAux<b,car,0,b::board::size>::col;
 };
 
+template<typename b, typename M>
+  struct CheckSolutionAux{};
+  
 template<typename b, typename M, typename ...MM>
-  struct CheckSolutionAux{
+  struct CheckSolutionAux<b,List<M,MM...>>{
     typedef typename MoveVehicle<b,FindCar<b,M::type>::row,FindCar<b,M::type>::col,M::direction, M::amount>::board boardMoved;
     typedef typename CheckSolutionAux<boardMoved,MM...>::board board;
   };
 template<typename b, typename M>
-  struct CheckSolutionAux{
-    typedef MoveVehicle<b,FindCar<b,M::type>::row,FindCar<b,M::type>::col,M::direction, M::amount>::board board;
+  struct CheckSolutionAux<b,List<M>>{
+    typedef typename MoveVehicle<b,FindCar<b,M::type>::row,FindCar<b,M::type>::col,M::direction, M::amount>::board board;
   };
-template<typename b, typename M, typename ...MM>
-struct CheckSolution{
   
+template<typename b, typename M>
+  struct CheckSolution{};
+  
+  
+template<typename b, typename M, typename ...MM>
+struct CheckSolution<b,List<M,MM...>>{
+  typedef typename CheckSolutionAux<b,List<M,MM...>>::board board;
+  const bool result = CheckWin<board>::result;
 };
 #endif /* RUSHHOUR_H_ */

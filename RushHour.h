@@ -34,7 +34,17 @@ struct IndexOfX<row,rowSize,rowSize>{
 };
 template<typename b, int rowIndex, int length>
 struct CheckWinAux{
-  static const int indexIfFound = IndexOfX<typename GetAtIndex<rowIndex, typename b::board>::value,0, GetAtIndex<rowIndex,typename b::board>::value::size>::result;
-  static const bool found = (indexIfFound != -1) && (WinningRow<typename GetAtIndex<rowIndex,typename b::board>::value, indexIfFound, WinningRow<typename GetAtIndex<rowIndex,typename b::board>::value>::size>::result);
+  typedef typename GetAtIndex<rowIndex,typename b::board>::value row;
+  static const int indexIfFound = IndexOfX<row,0, row::size>::result;
+  static const bool found = ConditionalInteger<(indexIfFound != -1) && (WinningRow<row , indexIfFound, row::size>::result),1,CheckWinAux<b,rowIndex+1,length>::found>::value;
+};
+template<typename b, int length>
+struct CheckWinAux<b, length, length>{
+  static const bool found = false;
+};
+
+template<typename b>
+struct CheckWin{
+  static const bool result = CheckWinAux<b,0,b::board::size>::found;
 };
 #endif /* RUSHHOUR_H_ */

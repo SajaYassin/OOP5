@@ -78,10 +78,7 @@ static_assert(Conditional<(0 == 1), Int<0>, Int<1>>::value :: value== 1, "gg");*
     printf("*****************\n");
     Printer<gameBoard1>::print(std::cout);
     printf("*****************\n");
-    printf("%d",WinningRow<GetAtIndex<2,gameBoard1::board>::value,4,GetAtIndex<2,gameBoard1::board>::value::size>::result);
-    printf("%d",IndexOfX<GetAtIndex<0,gameBoard1::board>::value,0,GetAtIndex<0,gameBoard1::board>::value::size>::result);
-    printf("%d",IndexOfX<GetAtIndex<1,gameBoard1::board>::value,0,GetAtIndex<1,gameBoard1::board>::value::size>::result);
-    printf("%d",IndexOfX<GetAtIndex<2,gameBoard1::board>::value,0,GetAtIndex<2,gameBoard1::board>::value::size>::result);
+    printf("%d",CheckWin<gameBoard1>::result);
 //    template<typename b, int R,int C,Direction D,int A>
     /*typedef typename MoveVehicle<gameBoard1,2,3,RIGHT,1>::board afterBoard;
     Printer<afterBoard>::print(std::cout);

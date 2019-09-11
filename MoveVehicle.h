@@ -31,7 +31,7 @@ struct Move {
 };
 
 template<typename b, int R,int C,Direction D,int A>
-struct MoveVehicle{
+struct MoveVehicleHorizontal{
 	static_assert(R < b::lenght,"invalid R");
 	static_assert(R >= 0,"invalid R");
 	static_assert(C < b::width,"invalid C");
@@ -46,22 +46,50 @@ struct MoveVehicle{
   typedef GameBoard<typename SetAtIndex<R,actualRowPost,typename b::board>::list> board;
 
 };
+template<typename b, int R,int C,Direction D,int A>
+struct MoveVehicle{
+	static_assert(R < b::lenght,"invalid R");
+	static_assert(R >= 0,"invalid R");
+	static_assert(C < b::width,"invalid C");
+	static_assert(C >= 0,"invalid C");
+	typedef typename GetAtIndex<R,typename b::board>::value row;
+	typedef typename GetAtIndex<C,row>::value car;
+	static_assert(car::type != EMPTY,"the car posiition is emPtY");
+	static_assert(car::direction == LEFT ||car::direction == RIGHT ,"the car DIR is wrong1");
+	typedef typename MoveVehicleHorizontal<b,R,C,D,A>::board board;
+};
+
 template<typename b, int R,int C,int A>
 struct MoveVehicle<b,R,C,UP,A>{
- typedef typename Transpose<typename b::board>::matrix transposed;
+	static_assert(R < b::lenght,"invalid R");
+	static_assert(R >= 0,"invalid R");
+	static_assert(C < b::width,"invalid C");
+	static_assert(C >= 0,"invalid C");
+	typedef typename GetAtIndex<R,typename b::board>::value row;
+	typedef typename GetAtIndex<C,row>::value car;
+	static_assert(car::type != EMPTY,"the car posiition is emPtY");
+	static_assert(car::direction == UP ||car::direction == DOWN ,"the car DIR is wrong2");
+	typedef typename Transpose<typename b::board>::matrix transposed;
 // typedef GameBoard<typename Transpose<typename b::board>::matrix> newboard;
- typedef typename MoveVehicle<GameBoard<transposed>,C,R,LEFT,A>::board done;
- typedef typename Transpose<typename done::board>::matrix transposedPost;
- typedef GameBoard<transposedPost> board;
+	typedef typename MoveVehicleHorizontal<GameBoard<transposed>,C,R,LEFT,A>::board done;
+	typedef typename Transpose<typename done::board>::matrix transposedPost;
+	typedef GameBoard<transposedPost> board;
 };
 
 template<typename b, int R,int C,int A>
 struct MoveVehicle<b,R,C,DOWN,A>{
- typedef typename Transpose<typename b::board>::matrix transposed;
-// typedef GameBoard<typename Transpose<typename b::board>::matrix> newboard;
- typedef typename MoveVehicle<GameBoard<transposed>,C,R,RIGHT,A>::board done;
- typedef typename Transpose<typename done::board>::matrix transposedPost;
- typedef GameBoard<transposedPost> board;
+	static_assert(R < b::lenght,"invalid R");
+	static_assert(R >= 0,"invalid R");
+	static_assert(C < b::width,"invalid C");
+	static_assert(C >= 0,"invalid C");
+	typedef typename GetAtIndex<R,typename b::board>::value row;
+	typedef typename GetAtIndex<C,row>::value car;
+	static_assert(car::type != EMPTY,"the car posiition is emPtY");
+	static_assert(car::direction == UP ||car::direction == DOWN ,"the car DIR is wrong3");
+	typedef typename Transpose<typename b::board>::matrix transposed;
+	typedef typename MoveVehicleHorizontal<GameBoard<transposed>,C,R,RIGHT,A>::board done;
+	typedef typename Transpose<typename done::board>::matrix transposedPost;
+	typedef GameBoard<transposedPost> board;
 };
 template<typename row,typename cell>
 struct moveOnce{

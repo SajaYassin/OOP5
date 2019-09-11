@@ -84,7 +84,7 @@ static_assert(Conditional<(0 == 1), Int<0>, Int<1>>::value :: value== 1, "gg");*
     typedef typename MoveVehicle<gameBoard1,2,3,LEFT,1>::board afterBoard2;
     Printer<afterBoard2>::print(std::cout);
     printf("*****************\n");
-    typedef typename MoveVehicle<afterBoard2,2,3,LEFT,1>::board afterBoard3;
+    typedef typename MoveVehicle<afterBoard2,2,1,LEFT,1>::board afterBoard3;
     Printer<afterBoard3>::print(std::cout);
     printf("*****************\n");
     typedef typename MoveVehicle<afterBoard3,2,1,RIGHT,4>::board afterBoard4;
@@ -93,9 +93,18 @@ static_assert(Conditional<(0 == 1), Int<0>, Int<1>>::value :: value== 1, "gg");*
     typedef typename MoveVehicle<afterBoard4,1,2,RIGHT,2>::board afterBoard5;
     Printer<afterBoard5>::print(std::cout);
     printf("*****************\n");
+//    typedef typename MoveVehicle<afterBoard5,0,4,LEFT,1>::board afterBoard6;
+//	Printer<afterBoard6>::print(std::cout);
+//	printf("*****************\n");
+	typedef GameBoard<typename Transpose<typename afterBoard5::board>::matrix> newboard;
+	Printer<newboard>::print(std::cout);
+	printf("*****************\n");
     typedef typename MoveVehicle<afterBoard5,4,2,UP,2>::board afterBoard6;
     Printer<afterBoard6>::print(std::cout);
-    printf("*****************\n");
+	printf("*****************\n");
+    typedef typename MoveVehicle<afterBoard5,2,2,DOWN,2>::board afterBoard7;
+    Printer<afterBoard6>::print(std::cout);
+
 }
 
 

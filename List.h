@@ -62,5 +62,33 @@ template<typename T, typename... TT>
 struct GetAtIndex<0, List<T, TT... > > {
 typedef T value;
 };
+template <typename T,typename List>
+struct PrependListlast {
+};
+//
+//template <typename T, typename... TT>
+//struct PrependListlast<List<TT...>> {
+//	typedef List<TT...,T> list;
+//};
+
+template <typename T, typename... TT>
+struct PrependListlast<T,List<TT...>> {
+	typedef List<TT...,T> list;
+};
+
+template<typename listIn>
+struct reverseList{};
+
+template<typename T>
+struct reverseList<List<T>>{
+	typedef  List<T>  list;
+};
+
+template<typename T, typename... TT>
+struct reverseList<List<T,TT...>>{
+	typedef typename PrependListlast<T,typename reverseList<List<TT...>>::list>::list list;
+};
+
+
 
 #endif /* LIST_H_ */

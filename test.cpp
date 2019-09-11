@@ -11,6 +11,8 @@
 #include "BoardCell.h"
 #include "GameBoard.h"
 #include "MoveVehicle.h"
+#include "Printer.h"
+#include "TransposeList.h"
 
 template <int N>
 struct Int {
@@ -58,6 +60,34 @@ static_assert(Conditional<(0 == 1), Int<0>, Int<1>>::value :: value== 1, "gg");*
     static_assert(Move<X, UP, 1>::amount == 1,"fail");
     static_assert(Move<X, UP, 1>::direction == UP,"fail");
     static_assert(Move<X, UP, 1>::type == X,"fail");
+
+//    typedef GameBoard<List< List< BoardCell<EMPTY, UP, 0>, BoardCell<EMPTY, UP, 0>>,
+//    List< BoardCell<X, RIGHT, 1>, BoardCell<A, UP, 1>>,
+//    List< BoardCell<EMPTY, UP, 0>, BoardCell<EMPTY, UP, 0>>>> gameBoard1;
+//    Printer<gameBoard1>::print(std::cout);
+
+    typedef GameBoard< List<
+            List < BoardCell< EMPTY , RIGHT , 1>, BoardCell< EMPTY , RIGHT , 0>, BoardCell< EMPTY , RIGHT , 0>, BoardCell< EMPTY , RIGHT , 0>, BoardCell< O , DOWN , 1>, BoardCell< EMPTY , RIGHT , 0> >,
+            List < BoardCell< EMPTY , RIGHT , 2>, BoardCell< EMPTY , RIGHT , 0>, BoardCell< A , RIGHT , 2>, BoardCell< A , LEFT , 2>, BoardCell< EMPTY , DOWN , 3>, BoardCell< EMPTY , RIGHT , 0> >,
+            List < BoardCell< EMPTY , RIGHT , 3>, BoardCell< EMPTY , RIGHT , 0>, BoardCell< X , RIGHT , 2>, BoardCell< X , LEFT , 2>, BoardCell< EMPTY , UP , 3>, BoardCell< EMPTY , RIGHT , 0> >,
+            List < BoardCell< EMPTY , RIGHT , 0>, BoardCell< EMPTY , RIGHT , 0>, BoardCell< EMPTY , RIGHT , 0>, BoardCell< EMPTY , RIGHT , 0>, BoardCell< EMPTY , RIGHT , 0>, BoardCell< EMPTY , RIGHT , 0> >,
+            List < BoardCell< EMPTY , RIGHT , 0>, BoardCell< EMPTY , RIGHT , 0>, BoardCell< B , DOWN , 2>, BoardCell< P , RIGHT , 3>, BoardCell< P , RIGHT , 3>, BoardCell< P , LEFT , 3> >,
+            List < BoardCell< EMPTY , RIGHT , 0>, BoardCell< EMPTY , RIGHT , 0>, BoardCell< B , UP , 2>, BoardCell< EMPTY , RIGHT , 0>, BoardCell< C , RIGHT , 2>, BoardCell< C , LEFT , 2> >
+    > > gameBoard1;
+    printf("*****************\n");
+    Printer<gameBoard1>::print(std::cout);
+    typedef typename reverseList<List < BoardCell< X , RIGHT , 2>, BoardCell< X , RIGHT , 2>,BoardCell< EMPTY , RIGHT , 1>>>::list reversed1;
+    printf("*****************\n");
+//    typedef typename Transpose<reversed1>::matrix reversed3;
+//    Printer<reversed3>::print(std::cout);
+    printf("*****************\n");
+    Printer<reversed1>::print(std::cout);
+    printf("*****************\n");
+    typedef List < BoardCell< X , RIGHT , 2>, BoardCell< X , RIGHT , 2>,BoardCell< EMPTY , RIGHT , 1>> reversed2;
+    Printer<reversed2>::print(std::cout);
+//    template<typename b, int R,int C,Direction D,int A>
+    typedef typename MoveVehicle<gameBoard1,2,3,RIGHT,1>::board afterBoard;
+    Printer<afterBoard>::print(std::cout);
 
 }
 

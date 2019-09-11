@@ -7,12 +7,16 @@
 
 #ifndef GAMEBOARD_H_
 #define GAMEBOARD_H_
-template <List list>
+#include "List.h"
+#include "BoardCell.h"
+
+template<typename list>
 struct GameBoard{
-	static const List board = list;
+	typedef list board;
 	static const int width = list::head::size;
 	static const int lenght = list::size;
 };
+
 
 
 

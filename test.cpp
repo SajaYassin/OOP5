@@ -8,6 +8,10 @@
 #include "List.h"
 #include "stdio.h"
 #include "Utilities.h"
+#include "BoardCell.h"
+#include "GameBoard.h"
+#include "MoveVehicle.h"
+
 template <int N>
 struct Int {
 	static const int value = N;
@@ -18,7 +22,7 @@ int main(){
 ////list::head x = 3;
 ////printf("%d",list::size);
 //static_assert(list::size == 1,"fail");
-typedef List<Int<1>, Int<2>, Int<3>> list;
+/*typedef List<Int<1>, Int<2>, Int<3>> list;
 typedef typename PrependList<Int<4>, list>::list newList;
 typedef typename PrependList<Int<5>, newList>::list newNewList;
 printf("%d",newList::size);
@@ -37,7 +41,24 @@ static_assert(ConditionalInteger<(0 != 1), 0, 1>::value == 0,"fail");
 static_assert(ConditionalInteger<(0 == 1), 0, 1>::value == 1,"fail");
 
 static_assert(Conditional<(0 != 1), Int<0>, Int<1>>::value :: value == 0,"d");
-static_assert(Conditional<(0 == 1), Int<0>, Int<1>>::value :: value== 1, "gg");
+static_assert(Conditional<(0 == 1), Int<0>, Int<1>>::value :: value== 1, "gg");*/
+
+    typedef GameBoard< List<
+            List < BoardCell< X , RIGHT , 2>, BoardCell< X , LEFT , 2>, BoardCell< EMPTY , RIGHT , 0> >,
+            List < BoardCell< EMPTY , RIGHT , 0>, BoardCell< EMPTY , RIGHT , 0>, BoardCell< A , RIGHT , 1> >
+    > > gameBoard;
+
+    static_assert(BoardCell< X , RIGHT , 2>::type == X,"fail");
+    static_assert(BoardCell< X , RIGHT , 2>::direction == RIGHT,"fail");
+    static_assert(BoardCell< X , RIGHT , 2>::lenght == 2,"fail");
+    static_assert(gameBoard::lenght == 2,"fail");
+    static_assert(gameBoard::width== 3,"fail");
+    static_assert(gameBoard::board::head::head::type == X,"fail");
+//    int moount = Move<EMPTY, UP, 1>::amount;
+    static_assert(Move<X, UP, 1>::amount == 1,"fail");
+    static_assert(Move<X, UP, 1>::direction == UP,"fail");
+    static_assert(Move<X, UP, 1>::type == X,"fail");
+
 }
 
 

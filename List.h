@@ -9,7 +9,8 @@
 #define LIST_H_
 
 template<typename... TT>
-struct List{
+struct List {
+	static const int size = 0;
 };
 
 template<typename T,typename... TT>
